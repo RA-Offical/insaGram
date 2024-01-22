@@ -3,10 +3,11 @@ import { SigninForm, SignupForm } from "./_auth/forms";
 import { Home } from "./_root/pages";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
+import { Toaster } from "@/components/ui/toaster";
 
 function App() {
 	return (
-		<main className="flex">
+		<main className="flex h-screen">
 			<Routes>
 				{/* public routes */}
 				<Route element={<AuthLayout />}>
@@ -15,10 +16,12 @@ function App() {
 				</Route>
 
 				{/* private routes */}
-				<Route element={<RootLayout />}>
+				<Route path="/" element={<RootLayout />}>
 					<Route index element={<Home />} />
 				</Route>
 			</Routes>
+
+			<Toaster />
 		</main>
 	);
 }

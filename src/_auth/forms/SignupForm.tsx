@@ -13,11 +13,19 @@ import { Input } from "@/components/ui/input";
 import { SignupValidation } from "@/lib/validation";
 import { z } from "zod";
 import { Loader } from "lucide-react";
-import { Link } from "react-router-dom";
-import { createUserAccount } from "@/lib/appwrite/api";
+import { Link, useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations";
+import { useUserContext } from "@/context/AuthContext";
 
 function SignupForm() {
-	const isLoading = false;
+	const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+
+	const { toast } = useToast();
+
+	const { mutateAsync: createUserAccount, isPending: isCreatingUser } = useCreateUserAccount();
+	const { mutateAsync: signInAccount, isPending: isSigningIn } = useSignInAccount();
+	const navigate = useNavigate();
 
 	const form = useForm<z.infer<typeof SignupValidation>>({
 		resolver: zodResolver(SignupValidation),
@@ -34,7 +42,25 @@ function SignupForm() {
 		// console.log(values);
 
 		const newUser = await createUserAccount(values);
-		console.log(newUser);
+
+		if (!newUser) {
+			return toast({ title: "User Sign up failed. Please try again" });
+		}
+
+		const session = await signInAccount({ email: values.email, password: values.password });
+
+		if (!session) {
+			return toast({ title: "Sign in failed. Please try again" });
+		}
+
+		const isLoggedIn = await checkAuthUser();
+
+		if (isLoggedIn) {
+			form.reset();
+			navigate("/");
+		} else {
+			return toast({ title: "Sign up failed. Please try again" });
+		}
 	}
 
 	return (
@@ -49,6 +75,7 @@ function SignupForm() {
 				</p>
 
 				<form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
+					{/* Name input */}
 					<FormField
 						control={form.control}
 						name="name"
@@ -62,7 +89,7 @@ function SignupForm() {
 							</FormItem>
 						)}
 					/>
-
+					{/* Username Input */}
 					<FormField
 						control={form.control}
 						name="username"
@@ -77,6 +104,7 @@ function SignupForm() {
 						)}
 					/>
 
+					{/* Email Input */}
 					<FormField
 						control={form.control}
 						name="email"
@@ -91,6 +119,7 @@ function SignupForm() {
 						)}
 					/>
 
+					{/* Passowrd Input */}
 					<FormField
 						control={form.control}
 						name="password"
@@ -104,8 +133,10 @@ function SignupForm() {
 							</FormItem>
 						)}
 					/>
+
+					{/* Submit button */}
 					<Button type="submit" className="shad-button_primary">
-						{isLoading ? (
+						{isCreatingUser ? (
 							<div className="flex-center gap-2">
 								<Loader /> Loading...
 							</div>
@@ -114,6 +145,7 @@ function SignupForm() {
 						)}
 					</Button>
 
+					{/* Alternative text */}
 					<p className="text-small-regular text-light-2 text-center mt-2">
 						Already have an account?{" "}
 						<Link to={"/sign-in"} className="text-primary-500 text-small-semibold ml-1">
