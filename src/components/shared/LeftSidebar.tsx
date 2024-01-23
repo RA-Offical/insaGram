@@ -32,7 +32,7 @@ function LeftSidebar() {
 						<p className="small-regular">@{user.username}</p>
 					</div>
 				</Link>
-
+				{/* Links */}
 				<ul className="flex flex-1 flex-col gap-5 overflow-auto">
 					{sidebarLinks.map((link: INavLink) => {
 						const isActive = pathname === link.route;
