@@ -30,7 +30,7 @@ function Topbar() {
 					{/* Account profile */}
 					<Link to={`/profile/${user.id}`} className="flex-center">
 						<img
-							src={`${user.imageUrl || "/assets/images/profile-placeholder.svg"}`}
+							src={`${user.imageUrl || "/assets/icons/profile-placeholder.svg"}`}
 							alt="profile"
 							className="h-8 w-8 rounded-full"
 						/>

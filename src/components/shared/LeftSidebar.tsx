@@ -33,7 +33,7 @@ function LeftSidebar() {
 					</div>
 				</Link>
 				{/* Links */}
-				<ul className="flex flex-1 flex-col gap-5 overflow-auto">
+				<ul className="flex flex-1 flex-col gap-5 overflow-auto custom-scrollbar">
 					{sidebarLinks.map((link: INavLink) => {
 						const isActive = pathname === link.route;
 						return (
