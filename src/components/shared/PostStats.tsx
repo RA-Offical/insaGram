@@ -16,10 +16,7 @@ type PostStatsProps = {
 
 function PostStats({ post, userId }: PostStatsProps) {
 	const [likes, setLikes] = useState(() => post?.likes.map((user: Models.Document) => user.$id));
-	console.log(post?.likes);
-
 	const [isSaved, setIsSaved] = useState(false);
-
 	const { mutate: likePost } = useLikePost();
 	const { mutate: savePost, isPending: isSavingPost } = useSavePost();
 	const { mutate: deleteSavedPost, isPending: isDeletingSavedPost } = useDeleteSavedPost();
@@ -34,6 +31,7 @@ function PostStats({ post, userId }: PostStatsProps) {
 		e.stopPropagation();
 
 		let newLikes = [...likes];
+
 		const hasLiked = newLikes.includes(userId);
 		if (hasLiked) {
 			newLikes = newLikes.filter((id) => id !== userId);
@@ -64,7 +62,7 @@ function PostStats({ post, userId }: PostStatsProps) {
 	}, [currentUser]);
 
 	return (
-		<div className="flex justify-between items-center z-20">
+		<div className="flex justify-between items-center z-20 gap-4">
 			<div className="flex gap-2">
 				<img
 					src={checkIsLiked(likes, userId) ? "/assets/icons/liked.svg" : "/assets/icons/like.svg"}

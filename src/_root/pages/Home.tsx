@@ -1,10 +1,11 @@
 import Loader from "@/components/shared/Loader";
 import PostCard from "@/components/shared/PostCard";
+import Sidebar from "@/components/shared/Sidebar";
 import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
 
 function Home() {
-	const { data: posts, isLoading: isPostLoading, isError: isPostsError } = useGetRecentPosts();
+	const { data: posts, isLoading: isPostLoading } = useGetRecentPosts();
 
 	return (
 		<div className="flex flex-1">
@@ -23,6 +24,8 @@ function Home() {
 					)}
 				</div>
 			</div>
+
+			<Sidebar />
 		</div>
 	);
 }

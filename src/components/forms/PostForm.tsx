@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-
 import {
 	Form,
 	FormControl,
@@ -19,7 +18,7 @@ import { Models } from "appwrite";
 import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations.ts";
 import { useUserContext } from "@/context/AuthContext.tsx";
 import { useToast } from "@/components/ui/use-toast.ts";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type PostFormProps = {
 	post?: Models.Document;
@@ -142,9 +141,9 @@ function PostForm({ post, action }: PostFormProps) {
 					)}
 				/>
 				<div className="flex justify-end items-center gap-4">
-					<Button type="button" className="shad-button_dark_4">
+					<Link to={"/"} type="button" className="h-10 rounded-md shad-button_dark_4 flex-center">
 						Cancel
-					</Button>
+					</Link>
 					<Button type="submit" className="shad-button_primary whitespace-nowrap">
 						{isCreatingPost || isUpdatingPost ? "Loading ..." : `${action} Post`}
 					</Button>
