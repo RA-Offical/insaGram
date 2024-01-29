@@ -9,8 +9,6 @@ type SearchResultsProps = {
 function SearchResults({ isFetchingSearchedPosts, searchedPosts }: SearchResultsProps) {
 	if (isFetchingSearchedPosts) return <Loader />;
 
-	console.log("Inside Search Results\n", searchedPosts);
-
 	if (searchedPosts && searchedPosts?.documents?.length > 0)
 		return <GridPostList posts={searchedPosts.documents} />;
 

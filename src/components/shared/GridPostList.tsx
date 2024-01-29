@@ -12,6 +12,8 @@ type GridPostListProps = {
 function GridPostList({ posts, showUser = true, showStats = true }: GridPostListProps) {
 	const { user } = useUserContext();
 
+	console.log(posts);
+
 	return (
 		<ul className="grid-container">
 			{posts.map((post: Models.Document) => (
@@ -23,14 +25,13 @@ function GridPostList({ posts, showUser = true, showStats = true }: GridPostList
 					<div className="grid-post_user">
 						{showUser && (
 							<Link
-								to={`/profile/${user.id}`}
+								to={`/profile/${post.creator.$id}`}
 								className="flex items-center justify-start gap-2 flex-1">
 								<img
 									src={post.creator?.imageUrl || "/assets/icons/profile-placeholder.svg"}
 									alt="Creator"
 									className="h-8 w-8 rounded-full"
 								/>
-
 								<p className="line-clamp-1">{post.creator.name}</p>
 							</Link>
 						)}
