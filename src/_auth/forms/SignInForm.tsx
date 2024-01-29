@@ -19,7 +19,7 @@ import { useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
 function SigninForm() {
-	const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+	const { checkAuthUser, isUserLoading } = useUserContext();
 
 	const { toast } = useToast();
 
