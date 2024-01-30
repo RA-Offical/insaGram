@@ -26,17 +26,13 @@ import {
 import { useToast } from "@/components/ui/use-toast.ts";
 import Loader from "@/components/shared/Loader";
 import { useEffect } from "react";
-import { Simulate } from "react-dom/test-utils";
-import reset = Simulate.reset;
 
 function UpdateProfile() {
-  const toast = useToast();
+  const { toast } = useToast();
   const navigate = useNavigate();
   const { user, setUser, isUserLoading } = useUserContext();
   const { id } = useParams();
-  const { data: currentUser, isPending: isGettingCurrentUser } = useGetUserById(
-    id || "",
-  );
+  const { data: currentUser } = useGetUserById(id || "");
   const { mutateAsync: updateUser, isPending: isUpdatingUser } =
     useUpdateUser();
 
