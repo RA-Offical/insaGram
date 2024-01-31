@@ -2,6 +2,7 @@ import Loader from "@/components/shared/Loader";
 import PostCard from "@/components/shared/PostCard";
 import Sidebar from "@/components/shared/Sidebar";
 import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
+import PostsSkeleton from "@/components/skeletons/PostsSkeleton.tsx";
 
 function Home() {
   const { data: posts, isLoading: isPostLoading } = useGetRecentPosts();
@@ -13,7 +14,7 @@ function Home() {
           <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed</h2>
 
           {isPostLoading && !posts ? (
-            <Loader />
+            <PostsSkeleton />
           ) : (
             <ul className="flex flex-col flex-1 gap-9 w-full">
               {posts?.documents.map((post) => (

@@ -24,7 +24,7 @@ function Skeleton({ className, count = 1, circle, style }: SkeletonProps) {
             style={style}
             key={`skeleton-${index}`}
             className={classNames(
-              "rounded-xl block animate-pulse",
+              "w-full rounded-xl block animate-pulse",
               className,
               baseColor,
               {
