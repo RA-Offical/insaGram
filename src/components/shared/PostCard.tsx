@@ -8,7 +8,6 @@ function PostCard({ post }: { post: Models.Document }) {
   const { user } = useUserContext();
 
   if (!post) return;
-  console.log(post);
 
   return (
     <div className="post-card">

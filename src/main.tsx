@@ -6,11 +6,11 @@ import AuthProvider from "./context/AuthContext";
 import QueryProvider from "./lib/react-query/QueryProvider";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLDivElement).render(
-	<BrowserRouter>
-		<QueryProvider>
-			<AuthProvider>
-				<App />
-			</AuthProvider>
-		</QueryProvider>
-	</BrowserRouter>
+  <BrowserRouter>
+    <QueryProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </QueryProvider>
+  </BrowserRouter>,
 );
