@@ -1,4 +1,3 @@
-import Loader from "@/components/shared/Loader";
 import PostCard from "@/components/shared/PostCard";
 import Sidebar from "@/components/shared/Sidebar";
 import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";

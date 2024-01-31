@@ -24,7 +24,7 @@ function Skeleton({ className, count = 1, circle, style }: SkeletonProps) {
             style={style}
             key={`skeleton-${index}`}
             className={classNames(
-              "w-full rounded-xl block animate-pulse",
+              "rounded-xl block animate-pulse",
               className,
               baseColor,
               {
@@ -32,7 +32,7 @@ function Skeleton({ className, count = 1, circle, style }: SkeletonProps) {
               },
             )}
           >
-            &zwnj;
+            &zwnj;&nbsp;
           </span>
         );
       })}
