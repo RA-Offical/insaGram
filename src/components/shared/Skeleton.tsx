@@ -8,9 +8,16 @@ type SkeletonProps = {
   style?: {
     [key: string]: any;
   };
+  bgColor?: string;
 };
 
-function Skeleton({ className, count = 1, circle, style }: SkeletonProps) {
+function Skeleton({
+  className,
+  count = 1,
+  circle,
+  style,
+  bgColor,
+}: SkeletonProps) {
   const { baseColor } = useSkeletonThemeContext();
   const spanCount = Math.floor(count);
   const hasHalfSpanCount = count % 1 !== 0;
@@ -26,7 +33,7 @@ function Skeleton({ className, count = 1, circle, style }: SkeletonProps) {
             className={classNames(
               "rounded-xl block animate-pulse",
               className,
-              baseColor,
+              { [bgColor || baseColor]: true },
               {
                 "!rounded-full": circle,
               },
@@ -41,6 +48,7 @@ function Skeleton({ className, count = 1, circle, style }: SkeletonProps) {
           className={classNames(className)}
           circle={circle}
           style={{ width: `${halfWidth}%` }}
+          bgColor={bgColor}
         />
       )}
     </>

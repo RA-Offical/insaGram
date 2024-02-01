@@ -1,5 +1,4 @@
 import GridPostList from "@/components/shared/GridPostList";
-import Loader from "@/components/shared/Loader";
 import SearchResults from "@/components/shared/SearchResults";
 import { Input } from "@/components/ui/input";
 import useDebounce from "@/hooks/useDebounce";
@@ -9,6 +8,7 @@ import {
 } from "@/lib/react-query/queriesAndMutations";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import GridPostSkeleton from "@/components/skeletons/GridPostSkeleton.tsx";
 
 const Explore = () => {
   const { ref, inView } = useInView({ rootMargin: "200px" });
@@ -23,19 +23,11 @@ const Explore = () => {
     if (inView && !query) fetchNextPage();
   }, [inView, query]);
 
-  if (!posts?.pages) {
-    return (
-      <div className="flex-center w-full h-full">
-        <Loader />
-      </div>
-    );
-  }
+  // if (!posts?.pages) {
+  //   return <GridPostList />;
+  // }
 
   const shouldShowSearchResults = query !== "";
-
-  const shouldShowPosts =
-    !shouldShowSearchResults &&
-    posts.pages.every((item) => item?.documents.length === 0);
 
   return (
     <div className="explore-container">
@@ -81,8 +73,8 @@ const Explore = () => {
             isFetchingSearchedPosts={isFetchingSearchedPosts}
             searchedPosts={searchedPosts!}
           />
-        ) : shouldShowPosts ? (
-          <p className="text-light-4 mt-10 text-center w-full">End of posts</p>
+        ) : !posts ? (
+          <GridPostSkeleton />
         ) : (
           posts.pages.map((item, index) => (
             <GridPostList key={`page-${index} `} posts={item?.documents} />
@@ -92,7 +84,7 @@ const Explore = () => {
 
       {hasNextPage && !query && (
         <div className="mt-10" ref={ref}>
-          <Loader />
+          <GridPostSkeleton />
         </div>
       )}
     </div>

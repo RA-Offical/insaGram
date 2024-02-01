@@ -1,6 +1,6 @@
 import Skeleton from "@/components/shared/Skeleton.tsx";
 
-function PostsSkeleton() {
+function HomePostsSkeleton() {
   return Array.from({ length: 5 }).map((_, index: number) => {
     return (
       <div key={`skeleton-${index}`} className="post-card space-y-4">
@@ -29,4 +29,4 @@ function PostsSkeleton() {
   });
 }
 
-export default PostsSkeleton;
+export default HomePostsSkeleton;
