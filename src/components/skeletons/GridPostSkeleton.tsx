@@ -1,4 +1,4 @@
-import PostSkeleton from "@/components/skeletons/PostSkeleton.tsx";
+import PostSkeletonList from "@/components/skeletons/PostSkeletonList.tsx";
 
 type GridPostSkeleton = {
   showStats?: boolean;
@@ -11,13 +11,7 @@ function GridPostSkeleton({
 }: GridPostSkeleton) {
   return (
     <div className={"grid-container"}>
-      {Array.from({ length: 9 }).map((_, index: number) => (
-        <PostSkeleton
-          key={`post-skeleton-${index}`}
-          showStats={showStats}
-          showUser={showUser}
-        />
-      ))}
+      <PostSkeletonList showStats={showStats} showUser={showUser} />
     </div>
   );
 }

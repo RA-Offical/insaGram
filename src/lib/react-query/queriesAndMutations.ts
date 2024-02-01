@@ -184,13 +184,15 @@ export function useGetInfinitePosts() {
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
     queryFn: getInfinitePosts,
     getNextPageParam: (lastPage) => {
+      // console.log(lastPage?.documents);
       if (lastPage && lastPage.documents.length === 0) return null;
       const lastPageId =
         lastPage?.documents[lastPage?.documents?.length - 1]?.$id;
       if (!lastPageId) return null;
-      return Number(lastPageId);
+
+      return lastPageId;
     },
-    initialPageParam: NaN, // Add this line
+    initialPageParam: "",
   });
 }
 

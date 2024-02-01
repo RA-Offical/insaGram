@@ -8,8 +8,8 @@ type PostSkeletonProps = {
 
 function PostSkeleton({ showStats, showUser }: PostSkeletonProps) {
   return (
-    <div className={"rounded-3xl relative min-w-[300px]"}>
-      <Skeleton className={"w-full aspect-square"} />
+    <div className={"rounded-3xl relative h-80"}>
+      <Skeleton className={"w-full h-full"} />
 
       <div className={"flex items-center absolute w-full left-0 bottom-0 p-5 "}>
         {showUser && (

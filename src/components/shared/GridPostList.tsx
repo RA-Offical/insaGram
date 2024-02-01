@@ -1,18 +1,22 @@
 import { useUserContext } from "@/context/AuthContext";
 import { Models } from "appwrite";
-import { Link } from "react-router-dom";
-import PostStats from "./PostStats";
+import PostsList from "@/components/shared/PostsList.tsx";
+import PostSkeletonList from "@/components/skeletons/PostSkeletonList.tsx";
 
 type GridPostListProps = {
   posts?: Models.Document[];
   showUser?: boolean;
   showStats?: boolean;
+  reference?: (node?: Element | null | undefined) => void;
+  isFetchingMorePosts?: boolean;
 };
 
 function GridPostList({
   posts,
   showUser = true,
   showStats = true,
+  reference,
+  isFetchingMorePosts,
 }: GridPostListProps) {
   const { user } = useUserContext();
 
@@ -20,38 +24,17 @@ function GridPostList({
 
   return (
     <ul className="grid-container">
-      {posts.map((post: Models.Document) => (
-        <li key={post.$id} className="w-full h-80 relative">
-          <Link to={`/posts/${post.$id}`} className="grid-post_link">
-            <img
-              src={post.imageUrl}
-              alt="post"
-              className="h-full w-full object-cover object-top"
-            />
-          </Link>
+      <PostsList
+        posts={posts}
+        showStats={showStats}
+        showUser={showUser}
+        user={user}
+        reference={reference}
+      />
 
-          <div className="grid-post_user">
-            {showUser && (
-              <Link
-                to={`/profile/${post.creator.$id}`}
-                className="flex items-center justify-start gap-2 flex-1"
-              >
-                <img
-                  src={
-                    post.creator?.imageUrl ||
-                    "/assets/icons/profile-placeholder.svg"
-                  }
-                  alt="Creator"
-                  className="h-8 w-8 rounded-full"
-                />
-                <p className="line-clamp-1">{post.creator.name}</p>
-              </Link>
-            )}
-
-            {showStats && <PostStats post={post} userId={user.id} />}
-          </div>
-        </li>
-      ))}
+      {isFetchingMorePosts && (
+        <PostSkeletonList showStats={showStats} showUser={showUser} />
+      )}
     </ul>
   );
 }

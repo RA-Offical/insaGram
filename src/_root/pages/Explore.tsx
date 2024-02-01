@@ -6,13 +6,19 @@ import {
   useGetInfinitePosts,
   useSearchPost,
 } from "@/lib/react-query/queriesAndMutations";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import GridPostSkeleton from "@/components/skeletons/GridPostSkeleton.tsx";
+import { Models } from "appwrite";
 
 const Explore = () => {
-  const { ref, inView } = useInView({ rootMargin: "200px" });
-  const { data: posts, fetchNextPage, hasNextPage } = useGetInfinitePosts();
+  const { ref, inView } = useInView({ rootMargin: "-300px" });
+  const {
+    data: posts,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useGetInfinitePosts();
   const [query, setQuery] = useState("");
   const debouncedValue = useDebounce(query, 500);
 
@@ -20,14 +26,23 @@ const Explore = () => {
     useSearchPost(debouncedValue);
 
   useEffect(() => {
-    if (inView && !query) fetchNextPage();
-  }, [inView, query]);
-
-  // if (!posts?.pages) {
-  //   return <GridPostList />;
-  // }
+    if (inView && !query && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, query, hasNextPage]);
 
   const shouldShowSearchResults = query !== "";
+
+  const flatPosts = useMemo(
+    () =>
+      posts?.pages
+        .map(
+          (item: Models.DocumentList<Models.Document> | undefined) =>
+            item!.documents,
+        )
+        .flat(),
+    [posts],
+  );
 
   return (
     <div className="explore-container">
@@ -73,20 +88,16 @@ const Explore = () => {
             isFetchingSearchedPosts={isFetchingSearchedPosts}
             searchedPosts={searchedPosts!}
           />
-        ) : !posts ? (
+        ) : !flatPosts ? (
           <GridPostSkeleton />
         ) : (
-          posts.pages.map((item, index) => (
-            <GridPostList key={`page-${index} `} posts={item?.documents} />
-          ))
+          <GridPostList
+            posts={flatPosts}
+            reference={ref}
+            isFetchingMorePosts={isFetchingNextPage}
+          />
         )}
       </div>
-
-      {hasNextPage && !query && (
-        <div className="mt-10" ref={ref}>
-          <GridPostSkeleton />
-        </div>
-      )}
     </div>
   );
 };
