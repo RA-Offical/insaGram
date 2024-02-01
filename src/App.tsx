@@ -4,6 +4,7 @@ import { SigninForm, SignupForm } from "./_auth/forms";
 import { Toaster } from "@/components/ui/toaster";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
+import LoaderWrapper from "@/components/shared/LoaderWrapper.tsx";
 
 const Home = lazy(() => import("./_root/pages/Home"));
 const Explore = lazy(() => import("./_root/pages/Explore"));
@@ -30,7 +31,7 @@ function App() {
           <Route
             index
             element={
-              <Suspense fallback={<div>Loading Home...</div>}>
+              <Suspense fallback={<LoaderWrapper />}>
                 <Home />
               </Suspense>
             }
@@ -38,7 +39,7 @@ function App() {
           <Route
             path="/explore"
             element={
-              <Suspense fallback={<div>Loading Explore</div>}>
+              <Suspense fallback={<LoaderWrapper />}>
                 <Explore />
               </Suspense>
             }
@@ -46,7 +47,7 @@ function App() {
           <Route
             path="/saved"
             element={
-              <Suspense fallback={<div>Loading Saved</div>}>
+              <Suspense fallback={<LoaderWrapper />}>
                 <Saved />
               </Suspense>
             }
@@ -54,7 +55,7 @@ function App() {
           <Route
             path="/all-users"
             element={
-              <Suspense fallback={<div>Loading All users</div>}>
+              <Suspense fallback={<LoaderWrapper />}>
                 <AllUsers />
               </Suspense>
             }
@@ -62,7 +63,7 @@ function App() {
           <Route
             path="/create-post"
             element={
-              <Suspense fallback={<div>Loading Create Post</div>}>
+              <Suspense fallback={<LoaderWrapper />}>
                 <CreatePost />
               </Suspense>
             }
@@ -70,7 +71,7 @@ function App() {
           <Route
             path="/update-post/:id"
             element={
-              <Suspense fallback={<div>Loading Update Post</div>}>
+              <Suspense fallback={<LoaderWrapper />}>
                 <EditPost />
               </Suspense>
             }
@@ -78,7 +79,7 @@ function App() {
           <Route
             path="/posts/:id"
             element={
-              <Suspense fallback={<div>Loading Post Details</div>}>
+              <Suspense fallback={<LoaderWrapper />}>
                 <PostDetails />
               </Suspense>
             }
@@ -86,7 +87,7 @@ function App() {
           <Route
             path="/profile/:id/*"
             element={
-              <Suspense fallback={<div>Loading Profile</div>}>
+              <Suspense fallback={<LoaderWrapper />}>
                 <Profile />
               </Suspense>
             }
@@ -94,14 +95,13 @@ function App() {
           <Route
             path="/update-profile/:id"
             element={
-              <Suspense fallback={<div>Loading Update Profile</div>}>
+              <Suspense fallback={<LoaderWrapper />}>
                 <UpdateProfile />
               </Suspense>
             }
           />
         </Route>
       </Routes>
-
       <Toaster />
     </main>
   );

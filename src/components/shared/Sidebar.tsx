@@ -1,6 +1,6 @@
 import { useGetUsers } from "@/lib/react-query/queriesAndMutations";
 import UserCard from "./UserCard";
-import UserCardSkeleton from "@/components/skeletons/UserCardSkeleton.tsx";
+import UserCardListSkeleton from "@/components/skeletons/UserCardListSkeleton.tsx";
 
 function Sidebar() {
   const { data: users, isPending: isFetchingUser } = useGetUsers(10);
@@ -11,7 +11,7 @@ function Sidebar() {
 
       <div className="grid 2xl:grid-cols-2 gap-6 mt-4">
         {isFetchingUser && !users ? (
-          <UserCardSkeleton />
+          <UserCardListSkeleton />
         ) : (
           <>
             {users?.documents.map((user) => (
