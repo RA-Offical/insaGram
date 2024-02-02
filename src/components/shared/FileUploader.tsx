@@ -1,14 +1,16 @@
 import { useCallback, useState } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 import { Button } from "../ui/button";
+import classNames from "classnames";
 
 // defining props of FileUploader component
 type FileUploaderProps = {
   fieldChange: (FILES: File[]) => void;
   mediaUrl: string;
+  disabled: boolean;
 };
 
-function FileUploader({ fieldChange, mediaUrl }: FileUploaderProps) {
+function FileUploader({ fieldChange, mediaUrl, disabled }: FileUploaderProps) {
   const [fileUrl, setFileUrl] = useState(mediaUrl);
   const [file, setFile] = useState<File[]>([]);
 
@@ -32,7 +34,10 @@ function FileUploader({ fieldChange, mediaUrl }: FileUploaderProps) {
   return (
     <div
       {...getRootProps()}
-      className="flex-center flex-col bg-dark-3 rounded-xl cursor-pointer"
+      className={classNames(
+        "flex-center flex-col bg-dark-3 rounded-xl cursor-pointer ",
+        { "pointer-events-none brightness-50": disabled },
+      )}
     >
       <input {...getInputProps()} />
       {fileUrl ? (

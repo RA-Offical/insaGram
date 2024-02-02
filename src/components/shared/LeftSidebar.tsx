@@ -1,15 +1,24 @@
 import { sidebarLinks } from "@/constants";
 import { useUserContext } from "@/context/AuthContext";
 import { INavLink } from "@/types";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
 import Skeleton from "@/components/shared/Skeleton.tsx";
+import { useToast } from "@/components/ui/use-toast.ts";
 
 function LeftSidebar() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const { user } = useUserContext();
   const { pathname } = useLocation();
   const { mutate: signOut } = useSignOutAccount();
+
+  function singOutUser() {
+    signOut();
+    toast({ title: "Logout Successfully" });
+    navigate("/sign-in");
+  }
 
   return (
     <nav className="leftsidebar h-screen">
@@ -76,7 +85,7 @@ function LeftSidebar() {
 
       <Button
         variant="ghost"
-        onClick={() => signOut()}
+        onClick={singOutUser}
         className="shad-button_ghost mt-4"
       >
         <img src="/assets/icons/logout.svg" />

@@ -3,25 +3,41 @@ import PostStats from "@/components/shared/PostStats";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import {
+  useDeletePost,
   useGetPostById,
   useGetUserPosts,
 } from "@/lib/react-query/queriesAndMutations";
 import { multiFormatDateString } from "@/lib/utils";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import GridPostList from "@/components/shared/GridPostList.tsx";
+import { useToast } from "@/components/ui/use-toast.ts";
 
 const PostDetails = () => {
   const { id } = useParams();
+  const { toast } = useToast();
+  const navigate = useNavigate();
   const { user } = useUserContext();
   const { data: post, isPending } = useGetPostById(id || "");
   const { data: userPosts, isPending: isLoadingUserPosts } = useGetUserPosts(
     post?.creator.$id || "",
   );
 
-  console.log(userPosts);
+  const { mutateAsync: deletePost, error: deletePostError } = useDeletePost();
 
-  function handleDeletePost(e: React.MouseEvent) {
+  async function handleDeletePost(e: React.MouseEvent) {
     e.stopPropagation();
+
+    await deletePost({ postId: id, imageId: post?.imageId });
+
+    if (deletePostError) {
+      toast({ title: "Post delete successfully", variant: "destructive" });
+    } else {
+      toast({
+        title: "Post deleted successfully",
+        className: "ring-offset-0 ring-primary-500",
+      });
+    }
+    return navigate("/");
   }
 
   return (

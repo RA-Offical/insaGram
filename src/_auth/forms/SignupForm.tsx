@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { SignupValidation } from "@/lib/validation";
 import { z } from "zod";
-import { Loader } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -20,6 +19,7 @@ import {
   useSignInAccount,
 } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
+import Loader from "@/components/shared/Loader.tsx";
 
 function SignupForm() {
   const { checkAuthUser } = useUserContext();
@@ -73,7 +73,7 @@ function SignupForm() {
 
   return (
     <Form {...form}>
-      <div className="sm:w-420 flex-center flex-col">
+      <div className="sm:w-420 flex-center flex-1 flex-col">
         <img src="/assets/images/logo.svg" alt="logo" />
 
         <h2 className="h3-bold md:h2-bold pt-5 md:pt-12">
@@ -96,7 +96,12 @@ function SignupForm() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
+                  <Input
+                    type="text"
+                    className="shad-input"
+                    {...field}
+                    disabled={isCreatingUser || isSigningUp}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,7 +115,12 @@ function SignupForm() {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
+                  <Input
+                    type="text"
+                    className="shad-input"
+                    {...field}
+                    disabled={isCreatingUser || isSigningUp}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -125,7 +135,12 @@ function SignupForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" className="shad-input" {...field} />
+                  <Input
+                    type="email"
+                    className="shad-input"
+                    {...field}
+                    disabled={isCreatingUser || isSigningUp}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -140,7 +155,12 @@ function SignupForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" className="shad-input" {...field} />
+                  <Input
+                    type="password"
+                    className="shad-input"
+                    {...field}
+                    disabled={isCreatingUser || isSigningUp}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -148,7 +168,11 @@ function SignupForm() {
           />
 
           {/* Submit button */}
-          <Button type="submit" className="shad-button_primary">
+          <Button
+            type="submit"
+            className="shad-button_primary"
+            disabled={isCreatingUser || isSigningUp}
+          >
             {isCreatingUser || isSigningUp ? (
               <div className="flex-center gap-2">
                 <Loader /> Loading...
