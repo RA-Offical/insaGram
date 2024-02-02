@@ -59,9 +59,10 @@ function PostForm({ post, action }: PostFormProps) {
       });
 
       if (!updatedPost) {
-        toast({ title: "Please try again" });
+        toast({ title: "Post update failed. Please try again!" });
       }
 
+      toast({ title: "Post updated successfully!" });
       return navigate(`/posts/${post.$id}`);
     }
 
@@ -71,8 +72,10 @@ function PostForm({ post, action }: PostFormProps) {
     });
 
     if (!newPost) {
-      toast({ title: "Please try again" });
+      toast({ title: "Post creation failed. Please try again" });
     }
+
+    toast({ title: "Post created successfully!" });
 
     navigate("/");
   }
