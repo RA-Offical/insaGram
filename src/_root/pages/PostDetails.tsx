@@ -1,4 +1,3 @@
-import Loader from "@/components/shared/Loader";
 import PostStats from "@/components/shared/PostStats";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
@@ -11,6 +10,8 @@ import { multiFormatDateString } from "@/lib/utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import GridPostList from "@/components/shared/GridPostList.tsx";
 import { useToast } from "@/components/ui/use-toast.ts";
+import PostDetailsSkeleton from "@/components/skeletons/PostDetailsSkeleton.tsx";
+import GridPostSkeleton from "@/components/skeletons/GridPostSkeleton.tsx";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -43,12 +44,12 @@ const PostDetails = () => {
   return (
     <div className="post_details-container">
       {isPending ? (
-        <Loader />
+        <PostDetailsSkeleton />
       ) : (
         <div className="post_details-card">
           <img src={post?.imageUrl} alt="post" className="post_details-img" />
 
-          <div className="post_details-info">
+          <div className="post_details-info bg-dark-2">
             <div className="flex-between w-full">
               <Link
                 to={`/profile/${post?.creator.$id}`}
@@ -135,7 +136,7 @@ const PostDetails = () => {
 
         {/*  showing related posts */}
         {isLoadingUserPosts ? (
-          <Loader />
+          <GridPostSkeleton />
         ) : (
           <GridPostList posts={userPosts?.documents} showStats={false} />
         )}

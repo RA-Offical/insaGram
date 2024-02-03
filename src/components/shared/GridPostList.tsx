@@ -20,7 +20,7 @@ function GridPostList({
 }: GridPostListProps) {
   const { user } = useUserContext();
 
-  if (!posts) return <p>No posts</p>;
+  if (!posts) return <p className={"text-primary-600"}>No posts</p>;
 
   return (
     <ul className="grid-container">
