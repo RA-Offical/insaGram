@@ -90,7 +90,7 @@
     }
 
     .custom-scrollbar::-webkit-scrollbar {
-        @apply w-4;
+        @apply w-3.5;
 
     }
 
@@ -105,6 +105,12 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         @apply bg-[#7878a3];
     }
+
+    .custom-scrollbar::-webkit-scrollbar-corner {
+        @apply bg-transparent;
+    }
+
+;
 
     .common-container {
         @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
@@ -134,7 +140,7 @@
 
     /* Home */
     .home-container {
-        @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
+        @apply flex flex-col flex-1 items-center gap-10 overflow-y-auto py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
     }
 
     .home-posts {
@@ -142,7 +148,7 @@
     }
 
     .home-creators {
-        @apply hidden xl:flex flex-col w-72 2xl:w-465 px-6 py-10 gap-10  overflow-scroll custom-scrollbar;
+        @apply hidden xl:flex flex-col w-72 2xl:w-465 px-6 py-10 gap-10 overflow-auto custom-scrollbar;
     }
 
     /* Post Details */

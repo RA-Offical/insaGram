@@ -45,7 +45,7 @@ const Profile = () => {
     );
 
   return (
-    <div className="flex flex-col gap-12 max-w-5xl mx-auto p-5 md:p-8 lg:p-12 flex-1 custom-scrollbar overflow-auto">
+    <div className="flex flex-col gap-12 items-center p-5 md:p-8 lg:p-12 flex-1 custom-scrollbar overflow-auto">
       <div className="flex flex-col items-center xl:flex-row xl:items-start gap-6">
         <img
           src={currentUser.imageUrl || "/assets/icons/profile-placeholder.svg"}
