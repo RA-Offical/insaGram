@@ -26,6 +26,7 @@ import {
 import { useToast } from "@/components/ui/use-toast.ts";
 import Loader from "@/components/shared/Loader";
 import { useEffect } from "react";
+import classNames from "classnames";
 
 function UpdateProfile() {
   const { toast } = useToast();
@@ -88,7 +89,7 @@ function UpdateProfile() {
     <div className="flex flex-col flex-1 items-center gap-10 p-5 md:p-8 lg:p-12 overflow-auto custom-scrollbar">
       <div className="flex items-center gap-2 w-full max-w-5xl">
         <img src="/assets/icons/edit.svg" alt="" className="h-9 w-9" />
-        <h2 className="h3-bold md:h2-bold w-full">Search Posts</h2>
+        <h2 className="h3-bold md:h2-bold w-full">Update Profile</h2>
       </div>
 
       <Form {...form}>
@@ -106,6 +107,7 @@ function UpdateProfile() {
                   <ProfileUploader
                     fieldChange={field.onChange}
                     mediaUrl={user.imageUrl}
+                    disabled={isUpdatingUser}
                   />
                 </FormControl>
                 <FormMessage />
@@ -125,6 +127,7 @@ function UpdateProfile() {
                     placeholder="shadcn"
                     {...field}
                     className="shad-input"
+                    disabled={isUpdatingUser}
                   />
                 </FormControl>
                 <FormMessage />
@@ -186,6 +189,7 @@ function UpdateProfile() {
                     placeholder="shadcn"
                     {...field}
                     className="shad-textarea"
+                    disabled={isUpdatingUser}
                   />
                 </FormControl>
                 <FormMessage />
@@ -196,11 +200,19 @@ function UpdateProfile() {
             <Link
               to={"/"}
               type="button"
-              className={`${buttonVariants({ variant: "ghost" })} shad-button_dark_4`}
+              className={classNames(
+                buttonVariants({ variant: "ghost" }),
+                "shad-button_dark_4",
+                { "pointer-events-none opacity-90": isUpdatingUser },
+              )}
             >
               Cancel
             </Link>
-            <Button type="submit" className="shad-button_primary">
+            <Button
+              type="submit"
+              className="shad-button_primary"
+              disabled={isUpdatingUser}
+            >
               {isUpdatingUser ? (
                 <>
                   <Loader /> Updating

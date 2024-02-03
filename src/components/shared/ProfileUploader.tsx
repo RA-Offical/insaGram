@@ -1,13 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 import ProfileUploaderDialog from "@/components/shared/ProfileUploaderDialog.tsx";
 import ProfileCropperDialog from "@/components/shared/ProfileCropperDialog.tsx";
+import classNames from "classnames";
 
 type ProfileUploaderProps = {
   fieldChange: (Files: File[]) => void;
   mediaUrl: string;
+  disabled: boolean;
 };
 
-function ProfileUploader({ fieldChange, mediaUrl }: ProfileUploaderProps) {
+function ProfileUploader({
+  fieldChange,
+  mediaUrl,
+  disabled,
+}: ProfileUploaderProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState({
@@ -39,7 +45,7 @@ function ProfileUploader({ fieldChange, mediaUrl }: ProfileUploaderProps) {
   }, [mediaUrl]);
 
   return (
-    <div>
+    <div className={classNames({ "pointer-events-none": disabled })}>
       <ProfileUploaderDialog
         {...{
           fileUrl,
